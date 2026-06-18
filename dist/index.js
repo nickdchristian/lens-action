@@ -84,7 +84,7 @@ async function run() {
         const workflowName = core.getInput('workflow_name', {
             required: true,
         });
-        const artifactVersion = core.getInput('artifact_version');
+        const artifactInput = core.getInput('artifact');
         const tagsInput = core.getInput('tags');
         const customDataInput = core.getInput('custom_data');
         const metricsInput = core.getInput('metrics');
@@ -96,8 +96,17 @@ async function run() {
             commit_sha: commitSha,
             workflow_name: workflowName,
         };
-        if (artifactVersion) {
-            payload.artifact_version = artifactVersion;
+        if (artifactInput) {
+            const parsedArtifact = (0, utils_1.parseMultilineDictionary)(artifactInput);
+            if (parsedArtifact.name && parsedArtifact.version) {
+                payload.artifact = {
+                    name: parsedArtifact.name,
+                    version: parsedArtifact.version,
+                };
+            }
+            else {
+                core.warning("Artifact input must contain both 'name' and 'version' fields. Ignoring artifact context.");
+            }
         }
         const parsedTags = (0, utils_1.parseMultilineDictionary)(tagsInput);
         if (Object.keys(parsedTags).length > 0) {
