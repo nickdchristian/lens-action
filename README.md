@@ -30,7 +30,9 @@ steps:
       api_host: 'https://lens.myorg.com'
       api_key: ${{ secrets.LENS_API_KEY }}
       workflow_name: 'Production Deployment'
-      artifact_version: 'v1.2.0'
+      artifact: |
+        name: lens-frontend
+        version: v1.2.0
       tags: |
         env: production
         region: us-east-1
@@ -47,7 +49,7 @@ steps:
 | `api_host` | Yes | The URL of your Lens API (e.g., `https://lens.myorg.com`). |
 | `api_key` | Yes | The secure API key to authenticate with Lens. |
 | `workflow_name` | Yes | The name of the workflow (e.g., `Deploy to Production`). |
-| `artifact_version` | No | The version of the artifact being deployed. |
+| `artifact` | No | A YAML-style dictionary defining the artifact being deployed (must include `name` and `version`). |
 | `tags` | No | A YAML-style list of key-value pairs representing tags. |
 | `custom_data` | No | A YAML-style list of key-value pairs representing custom data. |
 | `metrics` | No | A YAML-style list of numeric key-value pairs representing metrics. |
