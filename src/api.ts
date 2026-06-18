@@ -2,7 +2,10 @@ export interface LensEventPayload {
   repository: string;
   commit_sha: string;
   workflow_name: string;
-  artifact_version?: string;
+  artifact?: {
+    name: string;
+    version: string;
+  };
   tags?: Record<string, string>;
   custom_data?: Record<string, string>;
   metrics?: Record<string, number>;

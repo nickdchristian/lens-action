@@ -11,7 +11,7 @@ export async function run(): Promise<void> {
       required: true,
     });
 
-    const artifactVersion: string = core.getInput('artifact_version');
+    const artifactInput: string = core.getInput('artifact');
     const tagsInput: string = core.getInput('tags');
     const customDataInput: string = core.getInput('custom_data');
     const metricsInput: string = core.getInput('metrics');
@@ -27,8 +27,18 @@ export async function run(): Promise<void> {
       workflow_name: workflowName,
     };
 
-    if (artifactVersion) {
-      payload.artifact_version = artifactVersion;
+    if (artifactInput) {
+      const parsedArtifact = parseMultilineDictionary(artifactInput);
+      if (parsedArtifact.name && parsedArtifact.version) {
+        payload.artifact = {
+          name: parsedArtifact.name,
+          version: parsedArtifact.version,
+        };
+      } else {
+        core.warning(
+          "Artifact input must contain both 'name' and 'version' fields. Ignoring artifact context."
+        );
+      }
     }
 
     const parsedTags = parseMultilineDictionary(tagsInput);
