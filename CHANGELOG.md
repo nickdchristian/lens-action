@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.1.0...lens-action-v1.2.0) (2026-06-18)
+
+
+### Features
+
+* **schema:** Swap artifact_version for structured artifact dictionary ([#11](https://github.com/nickdchristian/lens-action/issues/11)) ([ef8bf7f](https://github.com/nickdchristian/lens-action/commit/ef8bf7f89bdad4c818d2abe4cfb5de66a8a43e87))
+
 ## [1.1.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.0.0...lens-action-v1.1.0) (2026-06-18)
 
 
