@@ -1,6 +1,6 @@
 {
   "name": "lens-action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Send deployment and CI events to your Lens dashboard",
   "main": "dist/index.js",
   "scripts": {
