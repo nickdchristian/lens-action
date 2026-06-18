@@ -1,0 +1,40 @@
+name: 'Lens Event Logger'
+description: 'Send deployment and CI events to your Lens dashboard'
+author: 'Lens Team'
+inputs:
+  api_host:
+    description: 'The URL of your Lens API (e.g., https://lens.myorg.com)'
+    required: true
+  api_key:
+    description: 'The secure API key to authenticate with Lens'
+    required: true
+  workflow_name:
+    description: 'The name of the workflow (e.g., Deploy to Production)'
+    required: true
+  artifact_version:
+    description: 'The version of the artifact being deployed (optional)'
+    required: false
+  tags:
+    description: |
+      A YAML-style list of key-value pairs representing tags for the event.
+      Example:
+        env: production
+        team: backend
+    required: false
+  custom_data:
+    description: |
+      A YAML-style list of key-value pairs representing custom data for the event.
+    required: false
+  metrics:
+    description: |
+      A YAML-style list of key-value numeric pairs representing metrics for the event.
+      Example:
+        build_time_seconds: 42.5
+    required: false
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'eye'
+  color: 'blue'
