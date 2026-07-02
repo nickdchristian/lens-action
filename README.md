@@ -40,6 +40,32 @@ steps:
       metrics: |
         build_time_seconds: 42.5
         bundle_size_mb: 1.2
+      chart_configs: |
+        build_time_seconds:
+          type: line
+        bundle_size_mb:
+          type: bar
+```
+
+### Automatic DORA Metrics Collection
+
+You can optionally instruct the action to automatically calculate and append pipeline-centric DORA metrics (`deployment_count`, `change_failure_rate`, `lead_time_minutes`) by enabling `track_dora`.
+
+```yaml
+steps:
+  - name: Log Deployment to Lens
+    # Best Practice: Use if: always() so failed deployments are still logged!
+    if: always()
+    uses: your-org/lens-action@v1
+    with:
+      api_host: 'https://lens.myorg.com'
+      api_key: ${{ secrets.LENS_API_KEY }}
+      workflow_name: 'Production Deployment'
+      
+      # Enable DORA metrics:
+      track_dora: 'true'
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      job_status: ${{ job.status }}
 ```
 
 ## Inputs
@@ -53,6 +79,10 @@ steps:
 | `tags` | No | A YAML-style list of key-value pairs representing tags. |
 | `custom_data` | No | A YAML-style list of key-value pairs representing custom data. |
 | `metrics` | No | A YAML-style list of numeric key-value pairs representing metrics. |
+| `chart_configs` | No | A YAML-style map defining the preferred visualization type (e.g., `'bar'` or `'line'`) for specific metrics. |
+| `track_dora` | No | Set to `'true'` to automatically compute and attach DORA metrics (lead time, deployment count, change failure rate). |
+| `github_token` | No | The `GITHUB_TOKEN` used to fetch commit data for DORA lead time calculation. Required if `track_dora` is `true`. |
+| `job_status` | No | The status of the deployment job (e.g., `${{ job.status }}`). Used to calculate change failure rate. |
 
 ## Development
 

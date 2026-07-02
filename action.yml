@@ -35,6 +35,25 @@ inputs:
       Example:
         build_time_seconds: 42.5
     required: false
+  chart_configs:
+    description: |
+      A YAML-style map defining the preferred visualization type (e.g., 'bar' or 'line') for specific metrics.
+      Example:
+        build_time_seconds:
+          type: line
+        error_count:
+          type: bar
+    required: false
+  track_dora:
+    description: 'Set to true to automatically compute and attach DORA metrics (lead time, deployment count, change failure rate)'
+    required: false
+    default: 'false'
+  github_token:
+    description: 'The GITHUB_TOKEN used to fetch commit data for DORA metrics'
+    required: false
+  job_status:
+    description: 'The status of the deployment job (e.g., ${{ job.status }})'
+    required: false
 runs:
   using: 'node24'
   main: 'dist/index.js'
