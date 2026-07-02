@@ -40,6 +40,11 @@ steps:
       metrics: |
         build_time_seconds: 42.5
         bundle_size_mb: 1.2
+      chart_configs: |
+        build_time_seconds:
+          type: line
+        bundle_size_mb:
+          type: bar
 ```
 
 ### Automatic DORA Metrics Collection
@@ -74,6 +79,7 @@ steps:
 | `tags` | No | A YAML-style list of key-value pairs representing tags. |
 | `custom_data` | No | A YAML-style list of key-value pairs representing custom data. |
 | `metrics` | No | A YAML-style list of numeric key-value pairs representing metrics. |
+| `chart_configs` | No | A YAML-style map defining the preferred visualization type (e.g., `'bar'` or `'line'`) for specific metrics. |
 | `track_dora` | No | Set to `'true'` to automatically compute and attach DORA metrics (lead time, deployment count, change failure rate). |
 | `github_token` | No | The `GITHUB_TOKEN` used to fetch commit data for DORA lead time calculation. Required if `track_dora` is `true`. |
 | `job_status` | No | The status of the deployment job (e.g., `${{ job.status }}`). Used to calculate change failure rate. |
