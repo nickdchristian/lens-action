@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.2.0...lens-action-v1.3.0) (2026-07-02)
+
+
+### Features
+
+* add built-in DORA metrics tracking and dynamic chart configurations ([#17](https://github.com/nickdchristian/lens-action/issues/17)) ([d7f5245](https://github.com/nickdchristian/lens-action/commit/d7f5245e249a28c289e4d13421984fe3e1cdd3b7))
+
 ## [1.2.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.1.0...lens-action-v1.2.0) (2026-06-18)
 
 

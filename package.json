@@ -1,6 +1,6 @@
 {
   "name": "lens-action",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Send deployment and CI events to your Lens dashboard",
   "main": "dist/index.js",
   "scripts": {
@@ -16,13 +16,13 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.9.3",
+    "@types/node": "^26.0.1",
     "@vercel/ncc": "^0.44.0",
     "eslint": "^10.5.0",
     "jest": "^30.4.2",
     "prettier": "^3.8.4",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.1"
+    "typescript-eslint": "^8.62.0"
   }
 }
