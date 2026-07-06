@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.3.0...lens-action-v1.4.0) (2026-07-06)
+
+
+### Features
+
+* monorepo support ([#24](https://github.com/nickdchristian/lens-action/issues/24)) ([a6e8ede](https://github.com/nickdchristian/lens-action/commit/a6e8eded880de1c9e879579a5af8a241851fbda0))
+
 ## [1.3.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.2.0...lens-action-v1.3.0) (2026-07-02)
 
 
