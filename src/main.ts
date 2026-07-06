@@ -21,9 +21,17 @@ export async function run(): Promise<void> {
     const githubToken: string = core.getInput('github_token');
     const jobStatus: string = core.getInput('job_status');
 
-    const repository =
+    const repositoryInput: string = core.getInput('repository');
+    const projectInput: string = core.getInput('project');
+
+    let repository =
+      repositoryInput ||
       process.env.GITHUB_REPOSITORY ||
       `${github.context.repo.owner}/${github.context.repo.repo}`;
+
+    if (projectInput) {
+      repository = `${repository}/${projectInput}`;
+    }
     const commitSha = process.env.GITHUB_SHA || github.context.sha;
 
     const payload: LensEventPayload = {
@@ -65,15 +73,16 @@ export async function run(): Promise<void> {
     const parsedChartConfigs = parseMultilineDictionary(chartConfigsInput);
     if (Object.keys(parsedChartConfigs).length > 0) {
       if (!payload.custom_data) payload.custom_data = {};
-      payload.custom_data._lens_chart_configs = JSON.stringify(parsedChartConfigs);
+      payload.custom_data._lens_chart_configs =
+        JSON.stringify(parsedChartConfigs);
     }
 
     if (trackDora) {
       if (!payload.metrics) payload.metrics = {};
-      
+
       // Deployment count
       payload.metrics.deployment_count = 1;
-      
+
       // Change Failure Rate
       if (jobStatus) {
         const status = jobStatus.toLowerCase();
@@ -94,17 +103,24 @@ export async function run(): Promise<void> {
             repo,
             ref: commitSha,
           });
-          const commitDateStr = response.data.commit.committer?.date || response.data.commit.author?.date;
+          const commitDateStr =
+            response.data.commit.committer?.date ||
+            response.data.commit.author?.date;
           if (commitDateStr) {
             const commitDate = new Date(commitDateStr).getTime();
             const leadTimeMinutes = (Date.now() - commitDate) / 60000;
-            payload.metrics.lead_time_minutes = Math.round(leadTimeMinutes * 100) / 100;
+            payload.metrics.lead_time_minutes =
+              Math.round(leadTimeMinutes * 100) / 100;
           }
         } catch (err) {
-          core.warning(`Failed to fetch commit for DORA lead time calculation: ${err}`);
+          core.warning(
+            `Failed to fetch commit for DORA lead time calculation: ${err}`
+          );
         }
       } else {
-        core.warning('track_dora is true but github_token is missing (or repository is malformed). Cannot calculate lead_time_minutes.');
+        core.warning(
+          'track_dora is true but github_token is missing (or repository is malformed). Cannot calculate lead_time_minutes.'
+        );
       }
     }
 
