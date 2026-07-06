@@ -92,8 +92,14 @@ async function run() {
         const trackDora = trackDoraInput.toLowerCase() === 'true';
         const githubToken = core.getInput('github_token');
         const jobStatus = core.getInput('job_status');
-        const repository = process.env.GITHUB_REPOSITORY ||
+        const repositoryInput = core.getInput('repository');
+        const projectInput = core.getInput('project');
+        let repository = repositoryInput ||
+            process.env.GITHUB_REPOSITORY ||
             `${github.context.repo.owner}/${github.context.repo.repo}`;
+        if (projectInput) {
+            repository = `${repository}/${projectInput}`;
+        }
         const commitSha = process.env.GITHUB_SHA || github.context.sha;
         const payload = {
             repository,
@@ -129,7 +135,8 @@ async function run() {
         if (Object.keys(parsedChartConfigs).length > 0) {
             if (!payload.custom_data)
                 payload.custom_data = {};
-            payload.custom_data._lens_chart_configs = JSON.stringify(parsedChartConfigs);
+            payload.custom_data._lens_chart_configs =
+                JSON.stringify(parsedChartConfigs);
         }
         if (trackDora) {
             if (!payload.metrics)
@@ -156,11 +163,13 @@ async function run() {
                         repo,
                         ref: commitSha,
                     });
-                    const commitDateStr = response.data.commit.committer?.date || response.data.commit.author?.date;
+                    const commitDateStr = response.data.commit.committer?.date ||
+                        response.data.commit.author?.date;
                     if (commitDateStr) {
                         const commitDate = new Date(commitDateStr).getTime();
                         const leadTimeMinutes = (Date.now() - commitDate) / 60000;
-                        payload.metrics.lead_time_minutes = Math.round(leadTimeMinutes * 100) / 100;
+                        payload.metrics.lead_time_minutes =
+                            Math.round(leadTimeMinutes * 100) / 100;
                     }
                 }
                 catch (err) {

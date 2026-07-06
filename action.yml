@@ -11,6 +11,12 @@ inputs:
   workflow_name:
     description: 'The name of the workflow (e.g., Deploy to Production)'
     required: true
+  repository:
+    description: 'Optional override for the repository name. Defaults to GITHUB_REPOSITORY (owner/repo)'
+    required: false
+  project:
+    description: 'Optional monorepo project name. If provided, it is appended to the repository name (e.g., owner/repo/project)'
+    required: false
   artifact:
     description: |
       A YAML-style dictionary defining the artifact being deployed.
