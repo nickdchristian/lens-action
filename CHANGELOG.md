@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.4.0...lens-action-v1.4.1) (2026-07-07)
+
+
+### Bug Fixes
+
+* remove unparseable github actions expression from description ([#26](https://github.com/nickdchristian/lens-action/issues/26)) ([44b6e0f](https://github.com/nickdchristian/lens-action/commit/44b6e0fb0c1b8f3d0a3328f0025d00d211b9aea2))
+
 ## [1.4.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.3.0...lens-action-v1.4.0) (2026-07-06)
 
 
