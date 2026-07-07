@@ -25,7 +25,7 @@ jobs:
     
     steps:
       - name: Log Deployment to Lens
-        uses: your-org/lens-action@v1
+        uses: nickdchristian/lens-action@v1
         with:
           api_host: 'https://lens.myorg.com'
           workflow_name: 'Production Deployment'
@@ -45,7 +45,7 @@ jobs:
       
     steps:
       - name: Log Deployment to Lens
-        uses: your-org/lens-action@v1
+        uses: nickdchristian/lens-action@v1
         with:
           api_host: 'https://lens.myorg.com'
           workflow_name: 'Production Deployment'
@@ -66,6 +66,27 @@ jobs:
               type: bar
 ```
 
+### Monorepo Example
+
+If your repository contains multiple distinct projects, you can use the `project` input to append a sub-project name to your repository identifier (e.g., `owner/repo/project-name`).
+
+```yaml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+      - name: Log Deployment to Lens
+        uses: nickdchristian/lens-action@v1
+        with:
+          api_host: 'https://lens.myorg.com'
+          workflow_name: 'Production Deployment'
+          project: 'backend-service' # This will log the event under "owner/repo/backend-service"
+```
+
 ### Automatic DORA Metrics Collection
 
 You can optionally instruct the action to automatically calculate and append pipeline-centric DORA metrics (`deployment_count`, `change_failure_rate`, `lead_time_minutes`) by enabling `track_dora`.
@@ -82,7 +103,7 @@ jobs:
       - name: Log Deployment to Lens
         # Best Practice: Use if: always() so failed deployments are still logged!
         if: always()
-        uses: your-org/lens-action@v1
+        uses: nickdchristian/lens-action@v1
         with:
           api_host: 'https://lens.myorg.com'
           workflow_name: 'Production Deployment'
