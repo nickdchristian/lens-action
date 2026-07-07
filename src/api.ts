@@ -19,10 +19,9 @@ export async function sendLensEvent(
   const baseUrl = apiHost.replace(/\/$/, '');
   const url = `${baseUrl}/api/v1/events`;
 
-
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${oidcToken}`
+    Authorization: `Bearer ${oidcToken}`,
   };
 
   const response = await fetch(url, {
