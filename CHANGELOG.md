@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.4.2...lens-action-v1.5.0) (2026-07-07)
+
+
+### Features
+
+* remove api key support and enforce native github oidc token auth ([#30](https://github.com/nickdchristian/lens-action/issues/30)) ([c337fb0](https://github.com/nickdchristian/lens-action/commit/c337fb09232fb4d416af7f8fe5d3d2f059d69a68))
+
 ## [1.4.2](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.4.1...lens-action-v1.4.2) (2026-07-07)
 
 
