@@ -13,18 +13,20 @@ export interface LensEventPayload {
 
 export async function sendLensEvent(
   apiHost: string,
-  apiKey: string,
-  payload: LensEventPayload
+  payload: LensEventPayload,
+  oidcToken: string
 ): Promise<void> {
   const baseUrl = apiHost.replace(/\/$/, '');
   const url = `${baseUrl}/api/v1/events`;
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${oidcToken}`,
+  };
+
   const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-API-Key': apiKey,
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 

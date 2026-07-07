@@ -6,7 +6,18 @@ import { parseMultilineDictionary, parseNumericDictionary } from './utils';
 export async function run(): Promise<void> {
   try {
     const apiHost: string = core.getInput('api_host', { required: true });
-    const apiKey: string = core.getInput('api_key', { required: true });
+    let oidcToken: string;
+
+    core.info('Fetching GitHub OIDC token...');
+    try {
+      oidcToken = await core.getIDToken('lens-telemetry');
+    } catch (error) {
+      throw new Error(
+        `Failed to fetch OIDC token. Ensure your workflow has 'permissions: { id-token: write }'. Error: ${error}`,
+        { cause: error }
+      );
+    }
+
     const workflowName: string = core.getInput('workflow_name', {
       required: true,
     });
@@ -125,7 +136,7 @@ export async function run(): Promise<void> {
     }
 
     core.debug(`Sending payload to Lens: ${JSON.stringify(payload)}`);
-    await sendLensEvent(apiHost, apiKey, payload);
+    await sendLensEvent(apiHost, payload, oidcToken);
 
     core.info(
       `Successfully logged event to Lens for repository: ${repository}`
