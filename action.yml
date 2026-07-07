@@ -58,7 +58,7 @@ inputs:
     description: 'The GITHUB_TOKEN used to fetch commit data for DORA metrics'
     required: false
   job_status:
-    description: 'The status of the deployment job (e.g., ${{ job.status }})'
+    description: 'The status of the deployment job (e.g., success, failure)'
     required: false
 runs:
   using: 'node24'
