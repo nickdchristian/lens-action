@@ -12,7 +12,10 @@ export async function run(): Promise<void> {
     try {
       oidcToken = await core.getIDToken('lens-telemetry');
     } catch (error) {
-      throw new Error(`Failed to fetch OIDC token. Ensure your workflow has 'permissions: { id-token: write }'. Error: ${error}`);
+      throw new Error(
+        `Failed to fetch OIDC token. Ensure your workflow has 'permissions: { id-token: write }'. Error: ${error}`,
+        { cause: error }
+      );
     }
 
     const workflowName: string = core.getInput('workflow_name', {
