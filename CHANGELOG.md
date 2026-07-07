@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.4.1...lens-action-v1.4.2) (2026-07-07)
+
+
+### Bug Fixes
+
+* downgrade [@actions](https://github.com/actions) packages to CommonJS for ncc bundling ([#28](https://github.com/nickdchristian/lens-action/issues/28)) ([f218a60](https://github.com/nickdchristian/lens-action/commit/f218a60a5562f53498ab7d376eb93f2d5cb23ced))
+
 ## [1.4.1](https://github.com/nickdchristian/lens-action/compare/lens-action-v1.4.0...lens-action-v1.4.1) (2026-07-07)
 
 
