@@ -4,10 +4,7 @@ author: 'Lens Team'
 inputs:
   api_host:
     description: 'The URL of your Lens API (e.g., https://lens.myorg.com)'
-    required: true
-  api_key:
-    description: 'The secure API key to authenticate with Lens'
-    required: true
+
   workflow_name:
     description: 'The name of the workflow (e.g., Deploy to Production)'
     required: true

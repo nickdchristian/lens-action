@@ -14,17 +14,17 @@ describe('API', () => {
       status: 202,
     });
 
-    await sendLensEvent('https://api.lens.com/', 'secret-key', {
+    await sendLensEvent('https://api.lens.com/', {
       repository: 'test-repo',
       commit_sha: 'abcdef',
       workflow_name: 'test-workflow',
-    });
+    }, 'mock-oidc-token');
 
     expect(mockFetch).toHaveBeenCalledWith('https://api.lens.com/api/v1/events', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': 'secret-key',
+        'Authorization': 'Bearer mock-oidc-token',
       },
       body: JSON.stringify({
         repository: 'test-repo',
@@ -39,15 +39,15 @@ describe('API', () => {
       ok: false,
       status: 401,
       statusText: 'Unauthorized',
-      text: jest.fn().mockResolvedValue('Invalid API Key'),
+      text: jest.fn().mockResolvedValue('Invalid OIDC Token'),
     });
 
     await expect(
-      sendLensEvent('https://api.lens.com', 'bad-key', {
+      sendLensEvent('https://api.lens.com', {
         repository: 'test-repo',
         commit_sha: 'abcdef',
         workflow_name: 'test-workflow',
-      })
-    ).rejects.toThrow('Failed to send event to Lens: 401 Unauthorized. Invalid API Key');
+      }, 'bad-token')
+    ).rejects.toThrow('Failed to send event to Lens: 401 Unauthorized. Invalid OIDC Token');
   });
 });

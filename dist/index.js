@@ -29222,15 +29222,16 @@ function wrappy (fn, cb) {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendLensEvent = sendLensEvent;
-async function sendLensEvent(apiHost, apiKey, payload) {
+async function sendLensEvent(apiHost, payload, oidcToken) {
     const baseUrl = apiHost.replace(/\/$/, '');
     const url = `${baseUrl}/api/v1/events`;
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${oidcToken}`
+    };
     const response = await fetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': apiKey,
-        },
+        headers,
         body: JSON.stringify(payload),
     });
     if (!response.ok) {
@@ -29295,7 +29296,14 @@ const utils_1 = __nccwpck_require__(1798);
 async function run() {
     try {
         const apiHost = core.getInput('api_host', { required: true });
-        const apiKey = core.getInput('api_key', { required: true });
+        let oidcToken;
+        core.info('Fetching GitHub OIDC token...');
+        try {
+            oidcToken = await core.getIDToken('lens-telemetry');
+        }
+        catch (error) {
+            throw new Error(`Failed to fetch OIDC token. Ensure your workflow has 'permissions: { id-token: write }'. Error: ${error}`);
+        }
         const workflowName = core.getInput('workflow_name', {
             required: true,
         });
@@ -29396,7 +29404,7 @@ async function run() {
             }
         }
         core.debug(`Sending payload to Lens: ${JSON.stringify(payload)}`);
-        await (0, api_1.sendLensEvent)(apiHost, apiKey, payload);
+        await (0, api_1.sendLensEvent)(apiHost, payload, oidcToken);
         core.info(`Successfully logged event to Lens for repository: ${repository}`);
     }
     catch (error) {
